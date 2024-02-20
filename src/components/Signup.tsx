@@ -36,15 +36,28 @@ let navigate = useNavigate();
 
 
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if(signup){
-      signup(formData)
-      navigate("/")
-      window.location.reload();
-    }
-   
-  };
+        const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+          event.preventDefault();
+        
+         
+          if (
+            formData.firstName.trim() === "" ||
+            formData.lastName.trim() === "" ||
+            formData.email.trim() === "" ||
+            formData.password.trim() === ""
+          ) {
+           
+            console.log("Please fill in all the required fields");
+            return;
+          }
+        
+          if (signup) {
+            signup(formData);
+            navigate("/");
+            window.location.reload();
+          }
+        };
+        
 
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
