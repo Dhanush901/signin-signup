@@ -144,6 +144,7 @@ export default function Signin() {
                 <OutlinedInput
                   id="outlined-adornment-email"
                   type="email"
+                  required
                   value={email}
                   onChange={handleEmailChange}
                   label="Email Address"
@@ -159,6 +160,7 @@ export default function Signin() {
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
+                  required
                   onChange={handlePasswordChange}
                   endAdornment={
                     <InputAdornment position="end">
