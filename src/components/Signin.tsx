@@ -2,8 +2,17 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 
+import IconButton from "@mui/material/IconButton";
+
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+
+import FormControl from "@mui/material/FormControl";
+
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -17,7 +26,6 @@ import { UsersContextApi } from "../context/UsersContext";
 import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-
 const defaultTheme = createTheme();
 export default function Signin() {
   // let navigate=useNavigate();
@@ -29,6 +37,16 @@ export default function Signin() {
   const users = x?.userData;
   console.log(users);
 
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
   type AuthType = {
     email: string;
     password: string;
@@ -38,9 +56,14 @@ export default function Signin() {
     password: "",
   });
   const { email, password } = authData;
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setAuthData({ ...authData, [name]: value });
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setAuthData({ ...authData, email: value });
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setAuthData({ ...authData, password: value });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,7 +75,6 @@ export default function Signin() {
         console.log("Authentication Result:", result);
 
         if (result) {
-          
         } else {
           // Handle authentication failure, show an error message, etc.
           console.error("Authentication failed.");
@@ -69,22 +91,28 @@ export default function Signin() {
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         {/* Corrected placement of <Grid item> */}
-        <Grid item xs={false} sm={4} md={7} sx={{
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundColor: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Typography component="h1" variant="h4" color="primary">
             Welcome to Resume Builder Page
           </Typography>
         </Grid>
-           
+
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -101,50 +129,71 @@ export default function Signin() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                value={email}
-                autoComplete="email"
-                onChange={handleInputChange}
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                value={password}
-                onChange={handleInputChange}
-                autoComplete="current-password"
-              />
+          
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
+<Box
+  component="form"
+  
+  onSubmit={handleSubmit}
+  sx={{ mt: 1 }}
+>
+<FormControl variant="outlined" fullWidth margin="normal">
+                <InputLabel htmlFor="outlined-adornment-email">
+                  Email Address
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-email"
+                  type="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  label="Email Address"
+                  autoFocus
+                />
+              </FormControl>
 
-              <Grid item display="flex" alignItems="center" justifyContent="center">
-              <NavLink to="/signup">Don't have an account? Sign Up</NavLink>
-              </Grid>
-            </Box>
+              <FormControl variant="outlined" fullWidth margin="normal">
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={handlePasswordChange}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
+
+
+
+  <Button
+    type="submit"
+    fullWidth
+    variant="contained"
+    sx={{ mt: 3, mb: 2 }}
+  >
+    Sign In
+  </Button>
+
+  <Grid item display="flex" alignItems="center" justifyContent="center">
+    <NavLink to="/signup">Don't have an account? Sign Up</NavLink>
+  </Grid>
+</Box>
+
+
+
           </Box>
         </Grid>
       </Grid>

@@ -83,6 +83,13 @@
       "lastName": "narzary",
       "email": "resham@gmail.com",
       "password": "1234"
+    },
+    {
+      "id": "f7ce",
+      "firstName": "Dhanush Reddy",
+      "lastName": "Bh",
+      "email": "bhimavarapu@gmail.com",
+      "password": "1234"
     }
   ]
 }

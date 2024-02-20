@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+
 const defaultTheme = createTheme();
 
 export default function Signup() {
@@ -40,16 +41,7 @@ let navigate = useNavigate();
           event.preventDefault();
         
          
-          if (
-            formData.firstName.trim() === "" ||
-            formData.lastName.trim() === "" ||
-            formData.email.trim() === "" ||
-            formData.password.trim() === ""
-          ) {
-           
-            console.log("Please fill in all the required fields");
-            return;
-          }
+         
         
           if (signup) {
             signup(formData);
@@ -86,7 +78,7 @@ let navigate = useNavigate();
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -98,6 +90,7 @@ let navigate = useNavigate();
                   value={formData.firstName}
                   onChange={handleInputChange}
                   label="First Name"
+                  
                   autoFocus
                 />
               </Grid>
@@ -113,19 +106,20 @@ let navigate = useNavigate();
                   autoComplete="family-name"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} >
                 <TextField
                   required
                   fullWidth
                   id="email"
                   label="Email Address"
                   name="email"
+                  type='email'
                   value={formData.email}
                   onChange={handleInputChange}
                   autoComplete="email"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12}> 
                 <TextField
                   required
                   fullWidth
